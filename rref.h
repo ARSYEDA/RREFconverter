@@ -2,13 +2,7 @@
 #include <iostream>
 using namespace std;
 
-//class interfaces
-class node {
-  public: 
-    node();
-    int * data;
-    node * next;
-};
+//class interface
 
 class converter {
   public:
@@ -18,11 +12,8 @@ class converter {
     void set_columns(int mcolumns) {COLUMNS = mcolumns;}
     void set_rows(int mrows) {ROWS = mrows;}
     void display_matrix();
-    void display_lll();
 
     void check_dimensions(int rows, int columns);
-    void make_lll();
-    int reorder_lll();
     int make_matrix();
     bool check_ref();
   private:
