@@ -17,17 +17,19 @@ class converter {
   public:
     converter();
     ~converter();
+
     void set_matrix(int ** new_matrix) {matrix = new_matrix;}
     void set_columns(int mcolumns) {COLUMNS = mcolumns;}
     void set_rows(int mrows) {ROWS = mrows;}
     int ** get_matrix() {return matrix;}
-    void display_matrix();
 
+    void display_matrix();
     void dimensions(int rows, int columns);
     int make_matrix();
     int is_ref();
     int convert();
     bool check_pivot(int row, int column);
+    void reorder();
   private:
     int ** matrix;
     int COLUMNS;

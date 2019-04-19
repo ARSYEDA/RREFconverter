@@ -76,7 +76,7 @@ int converter::is_ref() {
 	for(int k = 0; k < COLUMNS; ++k) {
 	    if(matrix[i][k] != 0)
 	        zeros = false;  
-	    if(!zeros) {
+	    if(!zeros) { 
 		if(matrix[i][k] == 1) 
 		    clear_pivot = check_pivot(i, k);
 		else if(matrix[i][k] != 1) 
@@ -107,6 +107,38 @@ bool converter::check_pivot(int row, int column) {
 //This function will go through the matrix and reduce by calling
 //helper functions, this function manages the reducing
 int converter::convert() {
-    return is_ref();
+    int *pivots = new int[ROWS]; //record of pivot column indices
+    for(int i = 0; i < ROWS; ++i) 
+	pivots[i] = 0;
+    bool ref = is_ref();
+    if(ref == 7) return ref; //error for matrix being NULL 
+    if(ref) return 1; //nothing else needed to convert
     
+    for(int i = 0; i < ROWS; ++i) {
+        bool pivot_column = false;//coef is in prev pivot
+	bool non_one_lead = false;//leading coef is not 1
+	int leading_coef_col = 99; //loc of leading coef
+    }
+    return 1;
+}
+
+//this function reorders the matrix rows so that the initial
+//leading coefficients that are in columns closer to 0 are above 
+//rows with leading coefficients that are farther from 1
+void converter:reorder() {
+    int *pivots = new int[ROWS]; //record of pivot column indices
+    for(int i = 0; i < ROWS; ++i) 
+	pivots[i] = 99;
+    for(int i = 0; i < ROWS; ++i) {
+	for(int k = 0; k < COLUMNS; ++k) {
+	    if(matrix[i][k] != 0) {
+		pivots[i] = k;
+		break;
+	    }
+        }
+    }
+    int** reorderedmatrix = new int*[ROWS];
+    for(int i = 0; i < ROWS; ++i)
+        matrix[i] = new int[COLUMNS];
+    //fill matrix, set rows to -1 when done, sort from low to high
 }
