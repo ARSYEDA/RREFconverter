@@ -1,11 +1,20 @@
 //functions for inputing a new matrix
 #include "rref.h"
 
+//test functions prototype
+//this function allows for the input of matrices and will
+//hopefully (eventually) test the edge cases automatically
+int ** user_input_matrix(int & rows, int & columns);
+void test_display(int ** matrix, int rows, int columns);
+void free_mem(int ** matrix, int rows, int columns);
+
 //main calls the test function and the 
 int main() {
     int rows, columns;
-    int **new_matrix = user_input_matrix(rows, columns);
+    int ** new_matrix = user_input_matrix(rows, columns);
     new_matrix = ref_converter(new_matrix, rows, columns);
+    test_display(new_matrix, rows, columns);
+    free_mem(new_matrix, rows, columns);
     return 0;
 }
 
@@ -30,4 +39,25 @@ int ** user_input_matrix(int & rows, int & columns) {
         cout << endl;
     }
     return matrix;
+}
+
+void test_display(int ** matrix, int rows, int columns) {
+    for(int i = 0; i < rows; ++i) {
+        cout << endl;
+        for(int k = 0; k < columns; ++k) {
+            cout << matrix[i][k] << "   ";
+        }
+    }
+    cout << endl;
+}
+
+void free_mem(int ** matrix, int rows, int columns) {
+    if(matrix) {
+	for(int i = 0; i < rows; ++i) {
+	    delete matrix[i];
+   	    matrix[i] = NULL;
+	}
+	delete matrix;
+	matrix = NULL;
+    }
 }

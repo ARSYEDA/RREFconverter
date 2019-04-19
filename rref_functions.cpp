@@ -9,21 +9,25 @@ int ** ref_converter(int **new_matrix, int rows, int columns) {
     c.set_matrix(new_matrix);
     c.dimensions(rows, columns);
     int status = c.convert();
-    if(status == 1)
+    if(status == 1) {
 	return c.get_matrix();
+    }
     if(status == 7)
 	cout << "\nexiting\n";
     return 0;
 }
 
+//inits class members to their 0 value to prep for start
 converter::converter() {
     matrix = NULL;
     COLUMNS = 0;
     ROWS = 0;
 }
 
+//frees dynamically allocated memory for matrix and NULL's
 converter::~converter() {
-
+//there is currently not dynamic mem managed by this class
+//the matrix ptr is a ptr to dynamic mem outside of class
 }
 
 //display function for 2d array
@@ -53,10 +57,36 @@ int converter::is_ref() {
 	cout << "\n error with matrix\n";
 	return 7;
     }
+
+    //the for loop below iterates through each row of the matrix.
+    //for each row, it sets 3 conditions, zeros means all 0 row, 
+    //leading is 1 means that leading coef is correct value.
+    //clear pivot means that there are no non 0 values below pivot.
+    //for each column in a row, it checks if its 0, changes zeros to 
+    //false if its not, it its not a zero, it checks if its 1, if it is
+    //not a 1, it can return false, this is not in ref form. if it is one
+    //it can call a check pivot column. if there are no 0's below the 1 
+    //then this column is in ref form and the column for loop can break
+    //to the next row. if it is not in ref form, the function can return
+
     for(int i = 0; i < ROWS; ++i) {
+	bool zeros = true;
+	bool leading_is_one = false; 
+	bool clear_pivot = false;
 	for(int k = 0; k < COLUMNS; ++k) {
-	    
-	} 
+	    if(matrix[i][k] != 0)
+	        zeros = false;  
+	    if(!zeros) {
+		if(matrix[i][k] == 1) 
+		    clear_pivot = check_pivot(i, k);
+		else if(matrix[i][k] != 1) 
+		    return false;
+	        if(!clear_pivot)
+		    return true;
+		else
+		    break;
+	    }
+	}  
     }
     return true;
 }
@@ -70,6 +100,7 @@ bool converter::check_pivot(int row, int column) {
 	if(matrix[i][column] != 0) 
 	    return false;
     }
+    cout << "MATRIX IS REF\n";
     return true;
 }
 
@@ -80,5 +111,5 @@ int converter::convert() {
     if(ref == 7)
 	return ref;
     if(ref == 1)
-	return 0;
+	return 1;
 }

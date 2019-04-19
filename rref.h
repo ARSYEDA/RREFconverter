@@ -34,8 +34,3 @@ class converter {
     int ROWS;
 };
 
-//test function prototype
-//this function allows for the input of matrices and will
-//hopefully (eventually) test the edge cases automatically
-int ** user_input_matrix(int & rows, int & columns);
-
