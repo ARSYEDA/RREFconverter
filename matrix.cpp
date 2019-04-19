@@ -1,6 +1,14 @@
 //functions for inputing a new matrix
 #include "rref.h"
 
+//main calls the test function and the 
+int main() {
+    int rows, columns;
+    int **new_matrix = user_input_matrix(rows, columns);
+    new_matrix = ref_converter(new_matrix, rows, columns);
+    return 0;
+}
+
 int ** user_input_matrix(int & rows, int & columns) {
     cout << "\nthis function tests the REF converter"
          << "\nplease enter how many rows are in the system: ";

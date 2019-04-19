@@ -16,6 +16,16 @@ int ** ref_converter(int **new_matrix, int rows, int columns) {
     return 0;
 }
 
+converter::converter() {
+    matrix = NULL;
+    COLUMNS = 0;
+    ROWS = 0;
+}
+
+converter::~converter() {
+
+}
+
 //display function for 2d array
 void converter::display_matrix() {
     for(int i = 0; i < ROWS; ++i) {
