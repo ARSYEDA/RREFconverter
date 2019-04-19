@@ -12,8 +12,13 @@ void free_mem(int ** matrix, int rows, int columns);
 int main() {
     int rows, columns;
     int ** new_matrix = user_input_matrix(rows, columns);
-    new_matrix = ref_converter(new_matrix, rows, columns);
-    test_display(new_matrix, rows, columns);
+    int ** returned_matrix = ref_converter(new_matrix, rows, columns);
+    if(!returned_matrix)
+	cout << "ERROR: NOT IN REF FORM\n";
+    else {
+        test_display(returned_matrix, rows, columns);
+        free_mem(returned_matrix, rows, columns);
+    }
     free_mem(new_matrix, rows, columns);
     return 0;
 }

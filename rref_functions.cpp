@@ -14,7 +14,7 @@ int ** ref_converter(int **new_matrix, int rows, int columns) {
     }
     if(status == 7)
 	cout << "\nexiting\n";
-    return 0;
+    return 0; //only reaches this return if something has gone wrong
 }
 
 //inits class members to their 0 value to prep for start
@@ -82,7 +82,7 @@ int converter::is_ref() {
 		else if(matrix[i][k] != 1) 
 		    return false;
 	        if(!clear_pivot)
-		    return true;
+		    return false;
 		else
 		    break;
 	    }
@@ -107,9 +107,6 @@ bool converter::check_pivot(int row, int column) {
 //This function will go through the matrix and reduce by calling
 //helper functions, this function manages the reducing
 int converter::convert() {
-    int ref = is_ref();
-    if(ref == 7)
-	return ref;
-    if(ref == 1)
-	return 1;
+    return is_ref();
+    
 }
