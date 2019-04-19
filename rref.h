@@ -2,27 +2,40 @@
 #include <iostream>
 using namespace std;
 
-//class interface
+//this is an outside function that creates the class and starts
+//the converter which makes the process more useful because 
+//the converter becomes a function that can be called instead 
+//of calling itsself in main. 
+int ** ref_converter(int **new_matrix, int rows, int columns);
 
+//class interface
+//this is the class that manages the converter, it has data members 
+//for the matrix and its dimensions. I decided to use a class for
+//this to reduce the amount of args for each function. all functions
+//that touch the matrix after it has been inputted are members 
 class converter {
   public:
     converter();
+    ~converter();
     void set_matrix(int ** new_matrix) {matrix = new_matrix;}
-    void set_head(node * temp) {head = temp;}
     void set_columns(int mcolumns) {COLUMNS = mcolumns;}
     void set_rows(int mrows) {ROWS = mrows;}
+    int ** get_matrix() {return matrix;}
     void display_matrix();
 
-    void check_dimensions(int rows, int columns);
+    void dimensions(int rows, int columns);
     int make_matrix();
-    bool check_ref();
+    int is_ref();
+    int convert();
+    bool check_pivot(int row, int column);
   private:
     int ** matrix;
-    node * head;
     int COLUMNS;
     int ROWS;
 };
 
 //test function prototype
-int ** test_function(int & rows, int & columns);
+//this function allows for the input of matrices and will
+//hopefully (eventually) test the edge cases automatically
+int ** user_input_matrix(int & rows, int & columns);
 
