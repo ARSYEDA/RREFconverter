@@ -4,7 +4,7 @@
 //this function can be called to start the ref conversion process.
 //it requires a int ** matrix and the row, columns of that matrix.
 //it returns a reduced matrix 
-float ** ref_converter(float **new_matrix, int rows, int columns) {
+float ** rref_converter(float **new_matrix, int rows, int columns) {
     converter c;
     c.set_matrix(new_matrix);
     c.dimensions(rows, columns);

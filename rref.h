@@ -6,7 +6,7 @@ using namespace std;
 //the converter which makes the process more useful because 
 //the converter becomes a function that can be called instead 
 //of calling itsself in main. 
-float ** ref_converter(float **new_matrix, int rows, int columns);
+float ** rref_converter(float **new_matrix, int rows, int columns);
 
 //class interface
 //this is the class that manages the converter, it has data members 

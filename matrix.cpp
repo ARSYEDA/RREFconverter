@@ -12,7 +12,7 @@ void free_mem(float ** matrix, int rows, int columns);
 int main() {
     int rows, columns;
     float ** new_matrix = user_input_matrix(rows, columns);
-    float ** returned_matrix = ref_converter(new_matrix, rows, columns);
+    float ** returned_matrix = rref_converter(new_matrix, rows, columns);
     if(!returned_matrix)
 	cout << "ERROR: NOT IN REF FORM\n";
     else {
