@@ -4,7 +4,7 @@
 //this function can be called to start the ref conversion process.
 //it requires a int ** matrix and the row, columns of that matrix.
 //it returns a reduced matrix 
-int ** ref_converter(int **new_matrix, int rows, int columns) {
+float ** ref_converter(float **new_matrix, int rows, int columns) {
     converter c;
     c.set_matrix(new_matrix);
     c.dimensions(rows, columns);
@@ -113,14 +113,10 @@ int converter::convert() {
     bool ref = is_ref();
     if(ref == 7) return ref; //error for matrix being NULL 
     if(ref) return 1; //nothing else needed to convert
-    display_matrix();  
     reorder();
     
-    for(int i = 0; i < ROWS; ++i) {
-        bool pivot_column = false;//coef is in prev pivot
-	bool non_one_lead = false;//leading coef is not 1
-	int leading_coef_col = 99; //loc of leading coef
-    }
+    for(int i = 0; i < ROWS; ++i) 
+	row_reduce(i);
     return 1;
 }
 
@@ -138,30 +134,68 @@ void converter::reorder() {
 	for(int k = 0; k < COLUMNS; ++k) {
 	    if(matrix[i][k] != 0) {
 		if(i > max)
-		    max = i;
+		    max = k;
 		pivots[i] = k;
 		break;
 	    }
         }
     }
-    int** reorderedmatrix = new int*[ROWS];
-    for(int i = 0; i < ROWS; ++i)
-        reorderedmatrix[i] = new int[COLUMNS];
-    int index = ROWS - 1;
-    while(index >= 0) {
-        for(int i = 0; i < ROWS; ++i) {
-	    if(pivots[i] == max) {
-		--max;
-		reorderedmatrix[index] = matrix[i];
-		for(int x = 0; x < COLUMNS; ++x) {
-		    reorderedmatrix[index][x] = matrix[i][x];
- 		}
-		pivots[i] = -1;
-		break;
-            }	
-	}
-	--index;
+    if(max > 0) {
+        float** reorderedmatrix = new float*[ROWS];
+        for(int i = 0; i < ROWS; ++i)
+            reorderedmatrix[i] = new float[COLUMNS];
+        int index = ROWS - 1;
+        while(index >= 0) {
+            for(int i = 0; i < ROWS; ++i) {
+                if(pivots[i] >= max) {
+		    if(max > 0)
+		        --max;
+		    reorderedmatrix[index] = matrix[i];
+		    for(int x = 0; x < COLUMNS; ++x) {
+		        reorderedmatrix[index][x] = matrix[i][x];
+ 	            }
+	            pivots[i] = -1;
+		    break;
+                }	
+	    }  
+	    --index;
+        }
+        matrix = reorderedmatrix;
     }
-    matrix = reorderedmatrix;
+}
+
+void converter::row_reduce(int row) {
+    int pivot;
+    for(int i = 0; i < COLUMNS; ++i) {
+        if(matrix[row][i] != 0) {
+	    pivot = i; 	
+	    break;
+	}
+    }
+    if(matrix[row][pivot] != 1) {
+        float divisor = matrix[row][pivot];
+	if(divisor) {
+	    for(int i = 0; i < COLUMNS; ++i) 
+	        matrix[row][i] = matrix[row][i] / divisor;
+        }
+    }    
+    for(int i = row+1; i < ROWS; ++i) {
+	float scalar = matrix[i][pivot];
+	for(int k = 0; k < COLUMNS; ++k) {
+	    matrix[i][k] = matrix[i][k] - (scalar * matrix[row][k]);
+	    if(matrix[i][k] == -0)
+		matrix[i][k] = 0;
+        }
+    }
+    if(row != 0) {
+	for(int i = 0; i < row; ++i) {
+	    float scalar = matrix[i][pivot]; 
+            for(int k = 0; k < COLUMNS; ++k) {
+		matrix[i][k] = matrix[i][k] - (scalar * matrix[row][k]);
+                if(matrix[i][k] == -0)
+		    matrix[i][k] = 0;
+            }
+	}
+    }
 }
 

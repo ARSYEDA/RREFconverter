@@ -6,7 +6,7 @@ using namespace std;
 //the converter which makes the process more useful because 
 //the converter becomes a function that can be called instead 
 //of calling itsself in main. 
-int ** ref_converter(int **new_matrix, int rows, int columns);
+float ** ref_converter(float **new_matrix, int rows, int columns);
 
 //class interface
 //this is the class that manages the converter, it has data members 
@@ -18,10 +18,10 @@ class converter {
     converter();
     ~converter();
 
-    void set_matrix(int ** new_matrix) {matrix = new_matrix;}
+    void set_matrix(float ** new_matrix) {matrix = new_matrix;}
     void set_columns(int mcolumns) {COLUMNS = mcolumns;}
     void set_rows(int mrows) {ROWS = mrows;}
-    int ** get_matrix() {return matrix;}
+    float ** get_matrix() {return matrix;}
 
     void display_matrix();
     void dimensions(int rows, int columns);
@@ -30,8 +30,9 @@ class converter {
     int convert();
     bool check_pivot(int row, int column);
     void reorder();
+    void row_reduce(int i);
   private:
-    int ** matrix;
+    float ** matrix;
     int COLUMNS;
     int ROWS;
 };
