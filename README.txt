@@ -27,6 +27,12 @@ a long amount of time to do by hand because of the amount of times
 you have to rewrite the matrix for each step. I figured that this converter
 could solve these problems faster than doing it by hand. 
 
+rref stands for reduced row echelon form
+the conditions for this are that all 0 rows need to be at the bottom,
+the leading coefficient of a row must be 1,  
+pivot columns (column with a rows leading coefficient, aka pivot) 
+can only have 0's in positions other than pivot position. 
+
 This program also includes some test functions in the matrix.cpp file.
 These are meant to verify that everything is working through each step. 
 
