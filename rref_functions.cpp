@@ -88,6 +88,7 @@ int converter::is_ref() {
 	    }
 	}  
     }
+    
     return true;
 }
 
@@ -100,7 +101,6 @@ bool converter::check_pivot(int row, int column) {
 	if(matrix[i][column] != 0) 
 	    return false;
     }
-    cout << "MATRIX IS REF\n";
     return true;
 }
 
@@ -113,6 +113,10 @@ int converter::convert() {
     bool ref = is_ref();
     if(ref == 7) return ref; //error for matrix being NULL 
     if(ref) return 1; //nothing else needed to convert
+    display_matrix();  
+    reorder();
+    cout << "out of reorder\n";
+    display_matrix();
     
     for(int i = 0; i < ROWS; ++i) {
         bool pivot_column = false;//coef is in prev pivot
@@ -124,14 +128,18 @@ int converter::convert() {
 
 //this function reorders the matrix rows so that the initial
 //leading coefficients that are in columns closer to 0 are above 
-//rows with leading coefficients that are farther from 1
-void converter:reorder() {
+//rows with leading coefficients that are farther from 0
+void converter::reorder() {
+    cout << "entered reorder\n";
     int *pivots = new int[ROWS]; //record of pivot column indices
     for(int i = 0; i < ROWS; ++i) 
 	pivots[i] = 99;
+    int max = 0;
     for(int i = 0; i < ROWS; ++i) {
 	for(int k = 0; k < COLUMNS; ++k) {
 	    if(matrix[i][k] != 0) {
+		if(i > max)
+		    max = i;
 		pivots[i] = k;
 		break;
 	    }
@@ -140,5 +148,29 @@ void converter:reorder() {
     int** reorderedmatrix = new int*[ROWS];
     for(int i = 0; i < ROWS; ++i)
         matrix[i] = new int[COLUMNS];
-    //fill matrix, set rows to -1 when done, sort from low to high
+    int index = ROWS - 1;
+    while(index >= 0) {
+        for(int i = 0; i < ROWS; ++i) {
+	    if(pivots[i] == max) {
+		--max;
+		reorderedmatrix[index] = matrix[i];
+		for(int x = 0; x < COLUMNS; ++x) {
+		    cout << "adding: " << matrix[i][x] << " to index " << index << ", " << x << endl;	
+		    reorderedmatrix[index][x] = matrix[i][x];
+ 		}
+		pivots[i] = -1;
+		break;
+            }	
+	}
+	--index;
+    }
+
+//    for(int i = 0; i < ROWS; ++i)
+//	delete matrix[i];
+//    delete matrix;
+    matrix = reorderedmatrix;
+    display_matrix();
 }
+
+
+//currently display seg faults becaus something in reorder breaks the matrix
