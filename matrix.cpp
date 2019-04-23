@@ -39,7 +39,7 @@ float ** user_input_matrix(int & rows, int & columns) {
     
     char col = 'a';
     cout << "\n\n";
-    for(int k = 0; k < rows; ++k) 
+    for(int k = 0; k < columns; ++k) 
 	cout << "   " << k + 1;
     cout << endl;
     for(int i = 0; i < rows; ++i) {
