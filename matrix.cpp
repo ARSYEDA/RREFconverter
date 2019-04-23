@@ -16,6 +16,7 @@ int main() {
     if(!returned_matrix)
 	cout << "ERROR: NOT IN REF FORM\n";
     else {
+	//RESULTING MATRIX:
         test_display(returned_matrix, rows, columns);
         free_mem(returned_matrix, rows, columns);
     }

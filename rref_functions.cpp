@@ -115,8 +115,6 @@ int converter::convert() {
     if(ref) return 1; //nothing else needed to convert
     display_matrix();  
     reorder();
-    cout << "out of reorder\n";
-    display_matrix();
     
     for(int i = 0; i < ROWS; ++i) {
         bool pivot_column = false;//coef is in prev pivot
@@ -129,8 +127,9 @@ int converter::convert() {
 //this function reorders the matrix rows so that the initial
 //leading coefficients that are in columns closer to 0 are above 
 //rows with leading coefficients that are farther from 0
+
+//NOTE the old array has not been freed yet so this is a memleak
 void converter::reorder() {
-    cout << "entered reorder\n";
     int *pivots = new int[ROWS]; //record of pivot column indices
     for(int i = 0; i < ROWS; ++i) 
 	pivots[i] = 99;
@@ -147,7 +146,7 @@ void converter::reorder() {
     }
     int** reorderedmatrix = new int*[ROWS];
     for(int i = 0; i < ROWS; ++i)
-        matrix[i] = new int[COLUMNS];
+        reorderedmatrix[i] = new int[COLUMNS];
     int index = ROWS - 1;
     while(index >= 0) {
         for(int i = 0; i < ROWS; ++i) {
@@ -155,7 +154,6 @@ void converter::reorder() {
 		--max;
 		reorderedmatrix[index] = matrix[i];
 		for(int x = 0; x < COLUMNS; ++x) {
-		    cout << "adding: " << matrix[i][x] << " to index " << index << ", " << x << endl;	
 		    reorderedmatrix[index][x] = matrix[i][x];
  		}
 		pivots[i] = -1;
@@ -164,13 +162,6 @@ void converter::reorder() {
 	}
 	--index;
     }
-
-//    for(int i = 0; i < ROWS; ++i)
-//	delete matrix[i];
-//    delete matrix;
     matrix = reorderedmatrix;
-    display_matrix();
 }
 
-
-//currently display seg faults becaus something in reorder breaks the matrix
