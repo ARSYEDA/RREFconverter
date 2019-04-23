@@ -164,6 +164,12 @@ void converter::reorder() {
     }
 }
 
+//This function reduces a row in the matrix and fixes its pivot
+//it does this by first dividing the row by the leading coef
+//which makes the leading coef 1 (a condition for rref). it then
+//moves down the rows below and 0's out the pivot column
+//it then starts at the top and does the same thing so all 
+//other entries in the row with the leading coef of this row are 0
 void converter::row_reduce(int row) {
     int pivot;
     for(int i = 0; i < COLUMNS; ++i) {
